@@ -14,13 +14,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 if(MSVC OR MSVC_IDE) 
-	if( MSVC_VERSION LESS 1700 )       # VC10-/VS2010- 
-		message(FATAL_ERROR "The project requires C++11 features. " 
-			"You need at least Visual Studio 11 (Microsoft Visual Studio 2012)") 
-	endif() 
+    if( MSVC_VERSION LESS 1700 )       # VC10-/VS2010- 
+        message(FATAL_ERROR "The project requires C++11 features. " 
+            "You need at least Visual Studio 11 (Microsoft Visual Studio 2012)") 
+    endif() 
 endif()
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 find_package(Glew REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLM REQUIRED)

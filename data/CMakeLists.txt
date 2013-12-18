@@ -15,3 +15,7 @@ configure_file(shaders/phong.frag
 	${CMAKE_CURRENT_BINARY_DIR}/shaders/phong.frag COPYONLY)
 
 
+configure_file(heightmaps/1.bmp
+	${CMAKE_CURRENT_BINARY_DIR}/heightmaps/1.bmp COPYONLY)
+
+

@@ -10,8 +10,11 @@
 #include "Logging.h"
 #include "Renderer.h"
 #include "FpsCamera.h"
+#include "HeightMapLoader.h"
 
+#include <SDL_image.h>
 #include <GL/glew.h>
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/swizzle.hpp>
 
@@ -26,12 +29,16 @@ SDLApplication::SDLApplication(int argc, char** argv)
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		throw SDLException("SDL_Init failed");
 
+	if (IMG_Init(IMG_INIT_PNG) == 0)
+		throw SDLException("IMG_Init failed");
+
 	createWindow(windowTitle, 800, 600);
 }
 
 SDLApplication::~SDLApplication() {
 	SDL_GL_DeleteContext(m_context);
 	SDL_DestroyWindow(m_window);
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -102,6 +109,12 @@ void SDLApplication::init() {
 	m_camera->setMovementSpeed(60.0f);
 	
 	m_renderer->setCamera(m_camera.get());
+
+	HeightMapLoader loader;
+	auto map = loader.load("1.bmp");
+
+	Terrain terrain{ map };
+	m_renderer->setTerrain(&terrain);
 }
 
 void SDLApplication::update() {

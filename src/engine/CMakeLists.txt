@@ -22,6 +22,10 @@ set(SM_ENGINE_HEADERS
 	Shader.h
 	ShaderProgram.h
 	ShaderManager.h
+	Mesh.h
+	Terrain.h
+	RenderBatch.h
+	VertexArrayObject.h
 )
 
 set(SM_ENGINE_SOURCES
@@ -31,6 +35,9 @@ set(SM_ENGINE_SOURCES
 	Shader.cpp
 	ShaderProgram.cpp
 	ShaderManager.cpp
+	Mesh.cpp
+	Terrain.cpp
+	RenderBatch.cpp
 )
 
 add_library(engine ${SM_ENGINE_SOURCES} ${SM_ENGINE_HEADERS})

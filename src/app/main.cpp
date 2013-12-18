@@ -20,8 +20,6 @@ int main(int argc, char** argv) {
 	try {
 		SDLApplication app(argc, argv);
 		return app.run();
-	} catch (SDLException& e) {
-		LOG(FATAL) << "Unhandled exception: " << e.what();
 	} catch (std::exception& e) {
 		LOG(FATAL) << "Unhandled exception: " << e.what();
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Unhandled exception", e.what(), nullptr);
