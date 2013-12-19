@@ -34,11 +34,15 @@ public:
 		return m_vao;
 	}
 
-	bool isReadyToDraw() {
+	const VertexArrayObject& vao() const {
+		return m_vao;
+	}
+
+	bool isReadyToDraw() const {
 		return m_vbo && m_primitiveTypeSet;
 	}
 
-	bool hasElements() {
+	bool hasElements() const {
 		return static_cast<bool>(m_ebo);
 	}
 
@@ -60,7 +64,15 @@ public:
 		return m_vbo.get();
 	}
 
+	const Buffer* vbo() const {
+		return m_vbo.get();
+	}
+
 	Buffer* ebo() {
+		return m_ebo.get();
+	}
+
+	const Buffer* ebo() const {
 		return m_ebo.get();
 	}
 

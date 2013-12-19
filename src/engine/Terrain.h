@@ -9,6 +9,7 @@
 #define TERRAIN_H
 
 #include "Mesh.h"
+#include "Material.h"
 
 #include <glm/glm.hpp>
 
@@ -26,10 +27,20 @@ public:
 	Mesh* mesh() {
 		return &m_mesh;
 	}
+
+	IMaterial* material() {
+		return m_material.get();
+	}
+
+	void setMaterial(std::shared_ptr<IMaterial> material) {
+		m_material = std::move(material);
+	}
 private:
-	static std::vector<uint32_t> computeIndices(const HeightMap& heightMap);
+	static std::vector<uint32_t> computeIndices(const HeightMap& map);
+	static std::vector<char> computeVertices(const HeightMap& map);
 
 	Mesh m_mesh;
+	std::shared_ptr<IMaterial> m_material;
 };
 
 #endif // !TERRAIN_H

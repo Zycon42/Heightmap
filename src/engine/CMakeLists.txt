@@ -26,6 +26,7 @@ set(SM_ENGINE_HEADERS
 	Terrain.h
 	RenderBatch.h
 	VertexArrayObject.h
+	Material.h
 )
 
 set(SM_ENGINE_SOURCES

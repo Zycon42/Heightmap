@@ -97,7 +97,7 @@ public:
 	/**
 	 * Binds this current object to target.
 	 */
-	void bind(GLenum target = GL_ARRAY_BUFFER) {
+	void bind(GLenum target = GL_ARRAY_BUFFER) const {
 		glBindBuffer(target, m_handle);
 	}
 };
@@ -117,7 +117,7 @@ public:
 	/**
 	 * Binds buffer to index
 	 */
-	void bind(GLuint index, GLenum target = GL_UNIFORM_BUFFER) {
+	void bind(GLuint index, GLenum target = GL_UNIFORM_BUFFER) const {
 		glBindBufferBase(target, index, m_handle);
 	}
 };

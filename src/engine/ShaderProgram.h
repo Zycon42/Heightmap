@@ -79,15 +79,15 @@ public:
 	 * @param value uniform name string.
 	 * @return glGetUniformLocation(program, value).
 	 */        
-	GLuint getUniformLocation(const char* value) {
+	GLuint getUniformLocation(const char* value) const {
 		return glGetUniformLocation(m_handle, value);
 	}
 
-	GLint getAttribLocation(const char* name) {
+	GLint getAttribLocation(const char* name) const {
 		return glGetAttribLocation(m_handle, name);
 	}
 
-	void use() {
+	void use() const {
 		glUseProgram(m_handle);
 	}
 

@@ -15,17 +15,12 @@ layout(binding = 0, std140) uniform CameraBlock {
 	vec3 pos;
 } camera;
 
-layout(binding = 1, std140) uniform NodeBlock {
-	mat4 model;
-	mat4 normalMatrix;
-} node;
-
 void main() {
 	// Normal of the the vertex, in world space
-	VertexOut.normal = normalize(node.normalMatrix * vec4(normal, 0)).xyz;
+	VertexOut.normal = normalize(normal);
 	
 	// Vertex pos in world space
-	VertexOut.worldPos = (node.model * vec4(pos,1)).xyz;
+	VertexOut.worldPos = pos;
 	
 	gl_Position = camera.viewProjection * vec4(VertexOut.worldPos, 1);
 }

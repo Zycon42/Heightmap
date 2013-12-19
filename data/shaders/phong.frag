@@ -14,14 +14,14 @@ layout(binding = 0, std140) uniform CameraBlock {
 	vec3 pos;
 } camera;
 
-layout(binding = 2, std140) uniform MaterialBlock {
+layout(binding = 1, std140) uniform MaterialBlock {
 	vec4 ambient;
 	vec4 diffuse;
 	vec4 specular;
 	float shininess;
 } material;
 
-layout(binding = 3, std140) uniform LightBlock {
+layout(binding = 2, std140) uniform LightBlock {
 	vec4 pos;
 	vec4 ambient;
 	vec4 diffuse;

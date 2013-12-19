@@ -37,7 +37,7 @@ public:
 	}
 
 	/// bind vao
-	void bind() {
+	void bind() const {
 		if (m_handle != s_bindVao) {
 			glBindVertexArray(m_handle);
 			s_bindVao = m_handle;

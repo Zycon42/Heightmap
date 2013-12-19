@@ -9,6 +9,7 @@
 
 #include "Logging.h"
 #include "Renderer.h"
+#include "ShaderManager.h"
 #include "FpsCamera.h"
 #include "HeightMapLoader.h"
 
@@ -114,6 +115,9 @@ void SDLApplication::init() {
 	auto map = loader.load("1.bmp");
 
 	Terrain terrain{ map };
+	auto material = std::make_shared<SimpleMaterial>();
+	material->setShader(m_renderer->shaderManager()->getGlslProgram("simple"));
+	terrain.setMaterial(std::move(material));
 	m_renderer->setTerrain(&terrain);
 }
 

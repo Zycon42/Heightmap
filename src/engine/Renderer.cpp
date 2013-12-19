@@ -58,6 +58,9 @@ void Renderer::setCamera(Camera* camera) {
 void Renderer::setTerrain(Terrain* terrain) {
 	m_terrain = std::make_unique<RenderBatch>();
 
+	m_terrain->shader = terrain->material()->shader();
+	m_terrain->materialUbo = terrain->material()->uniformBuffer();
+
 	auto mesh = terrain->mesh();
 	if (!mesh || !mesh->isValid()) {
 		LOG(ERROR) << "Renderable with invalid mesh registered to renderer.";
@@ -82,17 +85,34 @@ void Renderer::setTerrain(Terrain* terrain) {
 	m_terrain->geometry.reset(geom);
 }
 
-void Renderer::drawTerrain() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+void Renderer::drawBatch(const RenderBatch& batch) {
+	auto shader = batch.shader;
+	if (!shader)
+		throw Exception("Drawing rendering batch without shader!");
 
-	shaderManager()->getGlslProgram("simple")->use();
+	if (m_currentState.shader != shader) {
+		shader->use();
+		m_currentState.shader = shader;
+	}
 
-	auto geom = m_terrain->geometry.get();
+	auto materialUbo = batch.materialUbo;
+	if (materialUbo && m_currentState.materialUbo != materialUbo) {
+		materialUbo->bind(MATERIAL_BINDING_POINT, GL_UNIFORM_BUFFER);
+		m_currentState.materialUbo = materialUbo;
+	}
+
+	auto geom = batch.geometry.get();
 	geom->vao().bind();
 	if (geom->hasElements())
 		glDrawElements(geom->drawMode(), geom->indexCount(), geom->elementsType(), nullptr);
 	else
 		glDrawArrays(geom->drawMode(), 0, geom->vertexCount());
+}
+
+void Renderer::drawTerrain() {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	drawBatch(*m_terrain);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

@@ -22,6 +22,8 @@ class Terrain;
 namespace gl {
 
 class RenderBatch;
+class ShaderProgram;
+class IndexedBuffer;
 
 class Renderer
 {
@@ -44,12 +46,21 @@ public:
 	ShaderManager* shaderManager();
 
 private:
+	void drawBatch(const RenderBatch& batch);
 	void drawTerrain();
 
 	static const int CAMERA_BINDING_POINT = 0;
+	static const int MATERIAL_BINDING_POINT = 1;
+
+	struct State
+	{
+		gl::ShaderProgram* shader = nullptr;
+		gl::IndexedBuffer* materialUbo = nullptr;
+	};
 
 	Viewport m_viewport;
 
+	State m_currentState;
 	std::unique_ptr<RenderBatch> m_terrain;
 };
 
