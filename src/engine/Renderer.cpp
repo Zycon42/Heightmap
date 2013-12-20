@@ -13,6 +13,7 @@
 #include "ShaderManager.h"
 #include "Terrain.h"
 #include "RenderBatch.h"
+#include "Light.h"
 
 #include <GL/glew.h>
 
@@ -53,6 +54,10 @@ void Renderer::drawFrame() {
 
 void Renderer::setCamera(Camera* camera) {
 	camera->uniformBuffer()->bind(CAMERA_BINDING_POINT, GL_UNIFORM_BUFFER);
+}
+
+void Renderer::setLight(Light* light) {
+	light->uniformBuffer()->bind(LIGHT_BINDING_POINT, GL_UNIFORM_BUFFER);
 }
 
 void Renderer::setTerrain(Terrain* terrain) {
@@ -110,11 +115,11 @@ void Renderer::drawBatch(const RenderBatch& batch) {
 }
 
 void Renderer::drawTerrain() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	drawBatch(*m_terrain);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 }

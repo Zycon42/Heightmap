@@ -12,6 +12,7 @@
 #include "ShaderManager.h"
 #include "FpsCamera.h"
 #include "HeightMapLoader.h"
+#include "Light.h"
 
 #include <SDL_image.h>
 #include <GL/glew.h>
@@ -114,11 +115,27 @@ void SDLApplication::init() {
 	HeightMapLoader loader;
 	auto map = loader.load("1.bmp");
 
-	Terrain terrain{ map };
-	auto material = std::make_shared<SimpleMaterial>();
-	material->setShader(m_renderer->shaderManager()->getGlslProgram("simple"));
-	terrain.setMaterial(std::move(material));
-	m_renderer->setTerrain(&terrain);
+	auto material = std::make_shared<PhongMaterial>();
+	material->setShader(m_renderer->shaderManager()->getGlslProgram("phong"));
+
+	PhongMaterialData materialData = { glm::vec4(0.0f, 0.1f, 0.0f, 1.0f),
+		glm::vec4(0.8f, 0.3f, 0.1f, 1.0f), glm::vec4(0.3f, 0.3f, 0.3f, 1.0f), 5.0f };
+
+	material->properties()->setData(materialData);
+	material->properties()->flushData();
+
+	m_terrain = std::make_unique<Terrain>(map);
+	m_terrain->setMaterial(std::move(material));
+	m_renderer->setTerrain(m_terrain.get());
+
+	m_light = std::make_unique<Light>();
+	m_light->setPosition(glm::vec4(0.5f, 0.0f, -1.0f, 0.0f));
+	m_light->setAmbient(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	m_light->setDiffuse(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	m_light->setSpecular(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	m_light->flushChanges();
+
+	m_renderer->setLight(m_light.get());
 }
 
 void SDLApplication::update() {

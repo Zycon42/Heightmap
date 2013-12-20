@@ -20,6 +20,8 @@ namespace gl {
 }
 
 class FpsCamera;
+class Terrain;
+class Light;
 
 /**
  * Class representing SDL gui application.
@@ -94,6 +96,8 @@ private:
 
 	std::unique_ptr<gl::Renderer> m_renderer;
 	std::unique_ptr<FpsCamera> m_camera;
+	std::unique_ptr<Terrain> m_terrain;
+	std::unique_ptr<Light> m_light;
 	
 	KeyboardHandler m_keyboardHandler;
 };

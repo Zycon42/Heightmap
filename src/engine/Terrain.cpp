@@ -83,10 +83,16 @@ std::vector<char> Terrain::computeVertices(const HeightMap& map) {
 	storage.resize(sizeof(Vertex) * map.heights.size());
 
 	ArrayMapper<Vertex> vertices{ storage.data(), map.width };
+	// generate positions
 	for (size_t y = 0; y < map.height; ++y) {
 		for (size_t x = 0; x < map.width; ++x) {
 			vertices(x, y).pos = glm::vec3(x, y, map.heights[y * map.width + x]);
+		}
+	}
 
+	// generate normals - we need to do it in separate loop because this algorithm looks ahead
+	for (size_t y = 0; y < map.height; ++y) {
+		for (size_t x = 0; x < map.width; ++x) {
 			float z0 = vertices(x, y).pos.z;
 			float az = (x + 1 < map.width) ? (vertices(x + 1, y).pos.z) : z0;
 			float bz = (y + 1 < map.height) ? (vertices(x, y + 1).pos.z) : z0;

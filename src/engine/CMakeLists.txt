@@ -27,6 +27,7 @@ set(SM_ENGINE_HEADERS
 	RenderBatch.h
 	VertexArrayObject.h
 	Material.h
+	Light.h
 )
 
 set(SM_ENGINE_SOURCES
@@ -39,6 +40,7 @@ set(SM_ENGINE_SOURCES
 	Mesh.cpp
 	Terrain.cpp
 	RenderBatch.cpp
+	Light.cpp
 )
 
 add_library(engine ${SM_ENGINE_SOURCES} ${SM_ENGINE_HEADERS})

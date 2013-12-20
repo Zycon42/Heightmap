@@ -18,6 +18,7 @@
 class Camera;
 class ShaderManager;
 class Terrain;
+class Light;
 
 namespace gl {
 
@@ -38,6 +39,8 @@ public:
 	/// Sets camera which will be used.
 	void setCamera(Camera* camera);
 
+	void setLight(Light* light);
+
 	void setTerrain(Terrain* terrain);
 
 	/// Draw single frame, drawing all registered nodes
@@ -51,6 +54,7 @@ private:
 
 	static const int CAMERA_BINDING_POINT = 0;
 	static const int MATERIAL_BINDING_POINT = 1;
+	static const int LIGHT_BINDING_POINT = 2;
 
 	struct State
 	{
